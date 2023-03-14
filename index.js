@@ -86,7 +86,7 @@ app.post('/api/notes', (request, response) => {
   response.json(note);
 });
 
-const PORT = 10000 || 3000;
+const PORT = 10000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
