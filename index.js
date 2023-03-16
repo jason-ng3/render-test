@@ -1,18 +1,13 @@
-require('dotenv').config()
-const express = require('express'); // express function imported
-const app = express(); // invoke express to create express application
+const express = require('express'); 
+const app = express(); 
 const cors = require('cors');
 const Note = require('./models/note')
 
 
-app.use(express.json()); // activate express' json-parser
+app.use(express.json()); 
 app.use(cors());
-// app.use(express.static('dist'));
+app.use(express.static('dist'));
 
-// get route handles requests to '/'
-// request: all information in HTTP request
-// response: defines response to request
-// sends response containing string
 app.get('/', (request, response) => { 
   response.send('<h1>Hello World!</h1>') 
 })
@@ -49,9 +44,9 @@ app.delete('/api/notes/:id', (request, response, next) => {
 app.post('/api/notes', (request, response, next) => {
   const body = request.body;
 
-  // if (body.content === undefined) {
-  //   return response.status(404).json({ error: 'content missing' })
-  // }
+  if (body.content === undefined) {
+    return response.status(404).json({ error: 'content missing' })
+  }
 
   const note = new Note({
     content: body.content,
