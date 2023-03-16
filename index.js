@@ -2,6 +2,8 @@ const express = require('express');
 const app = express(); 
 const cors = require('cors');
 const Note = require('./models/note')
+const logger = require('./utils/logger')
+const config = require('./utils/config')
 
 
 app.use(express.json()); 
@@ -28,7 +30,6 @@ app.get('/api/notes/:id', (request, response) => {
       }
     })
     .catch(error => {
-      console.log(error)
       response.status(400).send({ error: 'malformatted id' })
     })
 })
@@ -80,7 +81,7 @@ app.put('/api/notes/:id', (request, response, next) => {
 })
 
 const errorHandler = (error, request, response, next) => {
-  console.error(error.message)
+  logger.error(error.message)
 
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
@@ -96,6 +97,6 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+  logger.info(`Server running on port ${config.PORT}`)
 })
 
